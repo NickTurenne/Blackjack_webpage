@@ -1,0 +1,25 @@
+body{
+    background-color: #35654d;
+}
+.center{
+    text-align: center;
+}
+.card{
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 10%;
+}
+#playspaceDealer{
+    text-align: center;
+}
+#playspacePlayer{
+    text-align: center;
+}
+#scores{
+    text-align: center;
+}
+#buttons{
+    display: block;
+    text-align: center;
+}
