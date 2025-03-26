@@ -223,7 +223,7 @@ function dealerTurn() {
     dealerScore = calculateDealerScore();
     dealerScoreText.innerHTML = `Dealer: ${dealerScore}`;
 
-    while (dealerScore <= 16) {
+    while (dealerScore < 17) {
         let newHandCard = getRandomCard();
         dealerHand.push(newHandCard);
         dealerScore = calculateDealerScore();
