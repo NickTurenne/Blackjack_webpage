@@ -62,10 +62,13 @@ const playerCard2 = document.getElementById("playerCard2");
 const playerScoreText = document.getElementById("playerScore");
 const dealerScoreText = document.getElementById("dealerScore");
 const winsLossesTiestext = document.getElementById("winsLossesTies");
-const dealerCardSpace = document.getElementById("playespaceDealer");
+const dealerCardSpace = document.getElementById("playspaceDealer");
 const playerCardSpace = document.getElementById("playspacePlayer");
+const winLossTiePopUp = document.getElementById("winLossTieText");
 let playerHand = [];
+let playerCardsExtra = [];
 let dealerHand = [];
+let dealerCardsExtra = [];
 let playerScore = 0;
 let dealerScore = 0;
 let playerTurn = false;
@@ -90,6 +93,16 @@ function updateWinsLossesTies() {
 
 // Iniates a new game of blackjack
 function playFunction() {
+    winLossTiePopUp.innerHTML = "&nbsp";
+    for (let i = playerCardsExtra.length - 1; i >= 0; i--) {
+        playerCardsExtra[i].remove()
+    }
+    playerCardsExtra = [];
+    for (let i = dealerCardsExtra.length - 1; i >= 0; i--) {
+        dealerCardsExtra[i].remove();
+    }
+    dealerCardsExtra = [];
+
     playerHand = [];
     dealerHand = [];
     for (let i = 0; i < 4; i++) {
@@ -104,7 +117,7 @@ function playFunction() {
     playerCard1.src = "images/" + playerHand[0][0];
     playerCard2.src = "images/" + playerHand[1][0];
     dealerCard1.src = "images/" + dealerHand[0][0];
-    // dealerCard2.src = "images/" + dealerHand[1][0];
+    dealerCard2.src = "images/card_back_blue.png";
     playerTurn = true;
 
     playerScore = calculatePlayerScore();
@@ -128,15 +141,21 @@ function hitFunciton() {
         return;
     }
     
-    playerHand.push(getRandomCard());
+    let newHandCard = getRandomCard();
+    playerHand.push(newHandCard);
     playerScore = calculatePlayerScore();
     playerScoreText.innerHTML = `Player: ${playerScore}`;
+    const newCard = document.createElement("img");
+    newCard.src = "images/" + newHandCard[0];
+    newCard.className = "card";
+    playerCardSpace.appendChild(newCard);
+    playerCardsExtra.push(newCard);
 
     if (playerScore > 21) {
-        alert("You lose!");
         playerTurn = false;
         losses++;
         updateWinsLossesTies();
+        winLossTiePopUp.innerHTML = "You lose!";
     }
 }
 
@@ -200,7 +219,37 @@ function calculateDealerScore() {
 
 // The turn for the dealer
 function dealerTurn() {
+    dealerCard2.src = "images/" + dealerHand[1][0];
+    dealerScore = calculateDealerScore();
+    dealerScoreText.innerHTML = `Dealer: ${dealerScore}`;
 
+    while (dealerScore < 16) {
+        let newHandCard = getRandomCard();
+        dealerHand.push(newHandCard);
+        dealerScore = calculateDealerScore();
+        dealerScoreText.innerHTML = `Dealer: ${dealerScore}`;
+        const newCard = document.createElement("img");
+        newCard.src = "images/" + newHandCard[0];
+        newCard.className = "card";
+        dealerCardSpace.appendChild(newCard);
+        dealerCardsExtra.push(newCard);
+    }
+
+    if (dealerScore > 21 || playerScore > dealerScore) {
+        wins++;
+        updateWinsLossesTies();
+        winLossTiePopUp.innerHTML = "You win!";
+    }
+    else if (dealerScore == playerScore) {
+        ties++;
+        updateWinsLossesTies();
+        winLossTiePopUp.innerHTML = "You tie!";
+    }
+    else {
+        losses++;
+        updateWinsLossesTies();
+        winLossTiePopUp.innerHTML = "You lose!";
+    }
 }
 
 playButton.addEventListener("click", playFunction);
