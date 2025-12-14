@@ -1,10 +1,10 @@
-#Blackjack Game
+# Blackjack Game
 A simple front-end Blackjack game built with HTML, CSS, and JavaScript. Play against the dealer and try to get as close to 21 as possible without going over!
 
-##Demo
+## Demo:
 https://nickturenne.github.io/Blackjack_webpage/
 
-##Features
+## Features
 Classic Blackjack gameplay:
 - Hit, Stand, and Deal options
 - Dealer plays automatically after player stands
@@ -12,7 +12,7 @@ Classic Blackjack gameplay:
 - Simple and responsive UI
 - Randomized card deck each game
 
-##Technologies Used
+## Technologies Used
 - HTML5 – for structure and layout
 - CSS3 – for styling and responsive design
 - JavaScript – for game logic and interactivity
